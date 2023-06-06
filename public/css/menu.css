@@ -1,0 +1,75 @@
+body{
+    background-color: rgb(255, 255, 255);
+}
+
+.menubox{
+    height: 110px;
+    width: 50%;
+    background-color: rgba(240, 230, 255, 0.507);
+    text-align: center;
+    border: 1px solid;
+    border-radius: 6px;
+    float: left;
+}
+
+.cart{
+    height: 400px;
+    width:  500px;
+    background-color: rgba(240, 230, 255, 0.507);
+    border: 1px solid;
+    border-radius: 6px;
+    float: left;
+    margin-top: -250px;
+    margin-left: 100px;
+}
+
+.item-selected{
+    height: 60px;
+    width: 97%;
+    text-align: center;
+    border: 1px solid;
+    border-radius: 6px;
+}
+
+.selected-item{
+    overflow: auto;
+    height: 400px;
+    width:  500px;
+}
+
+.billbox{
+    height: 140px;
+    width: 100%;
+    border: 1px solid;
+    border-radius: 5px;
+    background-color: rgba(240, 230, 255, 0.507);
+}
+
+.myorder{
+    height: 400px;
+    width: 400px;
+    border: 1px solid;
+    float: left;
+    margin-top: 10px;
+}
+
+.myorder .total{
+    height: 40px;
+    width: 100%;
+    border: 1px solid;
+}
+.perorder{
+    height: 60px;
+    width: 100%;
+    border: 1px solid;
+    text-align: center;
+}
+
+.perorder span{
+    display: inline-block;
+    height: 20px;
+    min-width : 60px;
+    border: 1px solid;
+    margin-top: 5px;
+    margin-left: 10px;
+}

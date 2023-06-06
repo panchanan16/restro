@@ -1,0 +1,24 @@
+.dataContainer{
+    height: 450px;
+    width : 60%;
+    border: 1px solid 
+}
+
+.order-item span{
+    display: inline-block;
+    height: 30px;
+    min-width: 70px;
+    background-color: antiquewhite;
+    margin-left: 10px;
+    margin-top: 6px;
+    text-align: center;
+    border: 1px solid;
+}
+
+.order-item{
+    height: 80px;
+    width: 95%;
+    border: 2px solid;
+    text-align: center;
+    margin: 10px;
+}

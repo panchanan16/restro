@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/menu.css">
+    <title>menu</title>
+</head>
+<body>
+    <h1>Welcome to Your menu</h1>
+
+    <% if(items){%>
+        <% items.forEach((el)=>{ %>
+        <div class="menubox" data-itemid="<%= el.item_id %>">
+            <p> <%= el.item_name %></p>
+            <span>$<%= el.item_price %></span>
+            <% if(el.item_offer){%>
+                <span id="offer">off <%= el.item_offer %> %</span>
+            <% } %> <br>
+            <button id="orderNow">order now</button>
+            <button id="addtobusket" onclick="addtocart(event, 'cartbox')">Add to busket</button>
+        </div>
+    <% })}%>
+    <div class="cart">
+       <div class="selected-item" id="cartbox">
+       </div>
+       <div class="billbox">
+         <h4> hey here is the bill bro</h4><h3 id="bill"></h3>
+         <button id="orderNow">Place Order</button>
+         <button id="myorder" onclick="mycartData()">My Order</button>
+       </div>
+    </div>
+    <div class="myorder">
+        <div class="total">
+            <div>Total Price: <span>$2000</span></div>
+            <div>Total Time: <span>00:00:00 min left</span></div>    
+        </div>
+        <div class="myeachorder">
+            <div class="perorder">
+                <span>Chowmin</span><span>$290</span><span>Accepted</span><span>Qnt: 1</span><br>
+                <span>Time</span><span>21/09/2003</span><span>6000192289</span><span>room :3</span>
+        </div>
+    </div>
+    <script src="../menu.js"></script>   
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/insight.css">
+    <title>insights</title>
+</head>
+<body>
+    <h2>Here is all the Insight</h2>
+    <input type="date" name="date" id="date" onchange="getPrevdataBydate(event)">
+    <select name="cars" id="cars" onchange=" getPrevdata(event)">
+        <option value="0">today</option>
+        <option value="7">last 7 days</option>
+        <option value="30">last 30 days</option>
+        <option value="60">last 60 days</option>
+        <option value="90">last 90 days</option>
+        <option value="180">last 6 month</option>
+      </select>
+  <div id="mainNumber">
+    <span>Total : <span id="tortal">50 </span></span>
+    <span>Accepted : <span id="accept">30</span></span>
+    <span>Rejected : <span id="reject">20</span></span>
+  </div>
+  <div class="dataContainer">
+    <div class="main-data-container">
+    </div>
+  </div>
+    <script src="/admin/insight.data.js"></script>
+</body>
+</html>
