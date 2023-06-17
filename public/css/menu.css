@@ -47,7 +47,7 @@ body{
 
 .myorder{
     height: 400px;
-    width: 400px;
+    width: 500px;
     border: 1px solid;
     float: left;
     margin-top: 10px;
@@ -63,6 +63,7 @@ body{
     width: 100%;
     border: 1px solid;
     text-align: center;
+    margin-top: 10px;
 }
 
 .perorder span{
@@ -72,4 +73,29 @@ body{
     border: 1px solid;
     margin-top: 5px;
     margin-left: 10px;
+}
+
+.myeachorder{
+    height: 340px;
+    width: 490px;
+    overflow-y: scroll;
+    overflow-x: hidden
+}
+
+.category{
+    height: 50px;
+    width: 50%;
+    background-color: rgb(225, 247, 240);
+}
+
+.category span{
+    height: 30px;
+    display: inline-block;
+    min-width: 50px;
+    border: 1px solid black;
+    margin-left : 10px;
+}
+
+.hide{
+    display: none;
 }

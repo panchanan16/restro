@@ -13,6 +13,7 @@ CREATE TABLE cat_agories (
 CREATE TABLE menu_items (
      item_id int AUTO_INCREMENT PRIMARY KEY,
      item_name VARCHAR(60),
+     item_category INT(60) NOT NULL,
      item_price INT(60),
      item_image VARCHAR(500),
      item_offer VARCHAR(10),
@@ -37,3 +38,7 @@ CREATE TABLE orders_ (
 ALTER TABLE `orders_` ADD CONSTRAINT `item_id` FOREIGN KEY (`i_id`) REFERENCES `menu_items`(`item_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 ALTER TABLE orders_ ADD COLUMN order_cus_number VARCHAR(12) AFTER order_time;
+
+ALTER TABLE menu_items ADD COLUMN item_category VARCHAR(60) AFTER item_name;
+
+ALTER TABLE `menu_items` ADD CONSTRAINT `item_category` FOREIGN KEY (`item_category`) REFERENCES `cat_agories`(`cat_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;

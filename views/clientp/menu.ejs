@@ -9,10 +9,12 @@
 </head>
 <body>
     <h1>Welcome to Your menu</h1>
-
+ <div class="category"><span onclick="filter_cat_al()">All</span></div>
+ <br>
+  <div class="mainmenu">
     <% if(items){%>
         <% items.forEach((el)=>{ %>
-        <div class="menubox" data-itemid="<%= el.item_id %>">
+        <div class="menubox" data-itemid="<%= el.item_id %>" data-cate="<%= el.category %>">
             <p> <%= el.item_name %></p>
             <span>$<%= el.item_price %></span>
             <% if(el.item_offer){%>
@@ -20,28 +22,22 @@
             <% } %> <br>
             <button id="orderNow">order now</button>
             <button id="addtobusket" onclick="addtocart(event, 'cartbox')">Add to busket</button>
+            <img src="<%= el.item_image %>" alt="N/A" height="60px" width="80px">
         </div>
     <% })}%>
+  </div>
+
+
     <div class="cart">
        <div class="selected-item" id="cartbox">
        </div>
        <div class="billbox">
          <h4> hey here is the bill bro</h4><h3 id="bill"></h3>
          <button id="orderNow">Place Order</button>
-         <button id="myorder" onclick="mycartData()">My Order</button>
+         <a href="myAllorders" style="text-decoration: none;">My Orders</a>
        </div>
     </div>
-    <div class="myorder">
-        <div class="total">
-            <div>Total Price: <span>$2000</span></div>
-            <div>Total Time: <span>00:00:00 min left</span></div>    
-        </div>
-        <div class="myeachorder">
-            <div class="perorder">
-                <span>Chowmin</span><span>$290</span><span>Accepted</span><span>Qnt: 1</span><br>
-                <span>Time</span><span>21/09/2003</span><span>6000192289</span><span>room :3</span>
-        </div>
-    </div>
+
     <script src="../menu.js"></script>   
 
 </body>

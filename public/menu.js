@@ -2,10 +2,21 @@ console.log("Welcome to menu page");
 
 let room = window.location.href.toString().split("/")[4];
 
+async function category_get(){
+  let fet = await fetch('/category')
+  let res = await fet.json();
+  //console.log(res);
+  res.forEach(elem => {
+    let html = `<span class="eachcat" onclick="filter_cat(event)">${elem.category}</span>`;
+    document.querySelector('.category').innerHTML += html;
+  });
+}
+category_get();
+
 function removeItem(even) {
   even.target.parentNode.remove();
   calculateBill()
-}
+} 
 
 function addtocart(eli, cartboxid) {
   let cartbox = document.getElementById(cartboxid)
@@ -21,16 +32,16 @@ function addtocart(eli, cartboxid) {
   })
   fillter.forEach((el) => { if (el) { cartbox.removeChild(el); } })
   cartbox.insertAdjacentHTML('afterbegin', html);
-  calculateBill();
+  calculateBill("item-selected", "bill");
 }
-function calculateBill() {
-  let price = document.querySelectorAll(".item-selected");
+function calculateBill(className, idName) {
+  let price = document.querySelectorAll(`.${className}`);
   if (price.length > 0) {
     let pricePerItem = Array.from(price).map((el) => { return Number(el.querySelector(".price-item").innerHTML.replace("$", "")); })
     let bill = pricePerItem.reduce((acc, curr) => { return acc + curr; })
-    document.getElementById('bill').innerHTML = `$ ${bill}`
+    document.getElementById(idName).innerHTML = `$ ${bill}`
   } else {
-    document.getElementById('bill').innerHTML = ""
+    document.getElementById(idName).innerHTML = ""
   }
 }
 
@@ -38,6 +49,7 @@ function calldata() {
   let num;
   if (document.cookie.split(";")[0].split("=")[1] === undefined) {
     num = setcook();
+    console.log(collectdata(num));
     fetch("/order", {
     method: "POST",
     body: JSON.stringify({ data: collectdata(num)}),
@@ -57,7 +69,7 @@ function calldata() {
   }
 }
 
-function collectdata(num) {
+function collectdata(numb) {
   let arr = [];
   let dateCur = new Date();
   let currDate = `${dateCur.getFullYear()}-${dateCur.getMonth() + 1}-${dateCur.getDate()}`
@@ -65,7 +77,7 @@ function collectdata(num) {
   let databox = document.getElementById('cartbox');
   if (databox.childNodes.length > 1) {
     databox.querySelectorAll(".item-selected").forEach((el) => {
-      arr.push(new Array(el.dataset.itid, el.childNodes[2].innerHTML, 'Qnt : 1', 'image', 'category', room, '0', '', currDate, currtime, num))
+      arr.push(new Array(el.dataset.itid, el.childNodes[2].innerHTML, 'Qnt : 1', 'image', 'category', room, '0', '', currDate, currtime, numb))
     });
     return arr;
   }
@@ -82,27 +94,17 @@ function applyOffer(even) {
     let ogPrice = Number(even.target.parentNode.querySelector(".price-item").innerHTML.replace('$', ''));
     let discountPrice = ogPrice - (off / 100) * ogPrice
     even.target.parentNode.querySelector(".price-item").innerHTML = `$ ${discountPrice}`
-    calculateBill();
+    calculateBill("item-selected", "bill");
   } else { console.log("No  discount available on this product") }
   even.target.removeAttribute("onclick");
 
 }
 
-
-async function setcook() {
+function setcook() {
   let number = prompt("Enter Your Phone Number");
   document.cookie = `username=${number}; max-age=` + 3600;
   return number;
 }
-
-async function mycartData(){
-  if (document.cookie.split(";")[0].split("=")[1] != undefined) {
-    const fet = await fetch('/getcartitem', {method: 'POST', body: JSON.stringify({num : document.cookie.split(";")[0].split("=")[1]}), headers :{"Content-Type": "application/json"}})
-    const response = await fet.json() ;
-    console.log(response)
-  }
-}
-
 
 function cowndown(out) {
   let aim = out * 60;
@@ -118,7 +120,19 @@ function cowndown(out) {
   }, 1000);
 }
 
-cowndown(.1);
+function filter_cat(eve) {
+  let ActualCat = document.querySelectorAll('.menubox')
+  Array.from(ActualCat).forEach((el)=>{
+     if (el.dataset.cate != eve.target.textContent) {el.classList.add("hide");}else{el.classList.remove("hide")}
+  }) 
+}
+
+function filter_cat_al(){
+  document.querySelectorAll('.menubox').forEach((el)=>{
+    el.classList.remove("hide");
+  })
+}
+
 
 
 
