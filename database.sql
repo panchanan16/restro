@@ -17,7 +17,7 @@ CREATE TABLE menu_items (
      item_price INT(60),
      item_image VARCHAR(500),
      item_offer VARCHAR(10),
-     item_category VARCHAR(60),
+     item_avalibility INT(3),
      FOREIGN KEY (cat_id) REFERENCES cat_agories(cat_id)
 );
 
@@ -42,3 +42,7 @@ ALTER TABLE orders_ ADD COLUMN order_cus_number VARCHAR(12) AFTER order_time;
 ALTER TABLE menu_items ADD COLUMN item_category VARCHAR(60) AFTER item_name;
 
 ALTER TABLE `menu_items` ADD CONSTRAINT `item_category` FOREIGN KEY (`item_category`) REFERENCES `cat_agories`(`cat_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE menu_items ADD COLUMN item_avalibility INT(3) AFTER item_offer;
+
+ALTER TABLE orders_ ADD COLUMN order_update VARCHAR(5) AFTER order_cus_number;

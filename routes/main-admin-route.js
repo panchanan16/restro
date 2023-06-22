@@ -52,4 +52,14 @@ route.post('/adminhome', (req, res)=>{
   })
 })
 
+route.post('/updatetime', (req, res)=>{
+  console.log(req.body.time, req.body.cus, req.body.date);
+  conn.query(`UPDATE orders_ SET order_update = '${req.body.time}' WHERE order_cus_number = '${req.body.cus}' AND order_date = '${req.body.date}'`, (err, result)=>{
+    if (!err) {
+      res.send({msg: "Time Updated Successfully!"});  
+    }
+  })
+})
+
+
 module.exports = route;

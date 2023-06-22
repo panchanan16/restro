@@ -14,9 +14,9 @@ arr.forEach((path)=>{
     })
 })
 
-route.post('/getcartitem', (req, res)=>{
-    //console.log(req.body)
-    conn.query(`SELECT menu_items.item_name, orders_.* FROM orders_ JOIN menu_items ON orders_.item_id = menu_items.item_id WHERE order_cus_number = '${req.body.num}'`, (err, result)=>{
+route.post('/getcartitem', async (req, res)=>{
+    //console.log(req.body.date)
+    conn.query(`SELECT menu_items.item_name, orders_.* FROM orders_ JOIN menu_items ON orders_.item_id = menu_items.item_id WHERE order_cus_number = '${req.body.num}' AND order_date = '${req.body.date}'`, (err, result)=>{
         if(!err && result.length > 0){
           res.send(result);
         }

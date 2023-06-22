@@ -15,7 +15,7 @@ category_get();
 
 function removeItem(even) {
   even.target.parentNode.remove();
-  calculateBill()
+  calculateBill('item-selected', 'bill');
 } 
 
 function addtocart(eli, cartboxid) {
@@ -104,20 +104,6 @@ function setcook() {
   let number = prompt("Enter Your Phone Number");
   document.cookie = `username=${number}; max-age=` + 3600;
   return number;
-}
-
-function cowndown(out) {
-  let aim = out * 60;
-  let x = setInterval(() => {
-    if (aim < 1) {
-      clearInterval(x)
-    }else{
-      aim = aim - 1
-      let time = `${Math.floor(aim/60)} min ${aim%60}sec left`
-      console.log(time)  ; 
-    }
-    
-  }, 1000);
 }
 
 function filter_cat(eve) {

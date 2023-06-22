@@ -38,11 +38,11 @@ async function getPrevdata(even) {
     let fet = await fetch('/getByPeriod', {method: 'POST', body: JSON.stringify(dataFromTo), headers : { "Content-Type": "application/json"}});
     let response = await fet.json();
     gettingDataNumber(response[1], response[0].length)
-    console.log(response, response.length);
+    renderData(response[0]);
 }
 
 async function getPrevdataBydate(even) {
-    let num = even === undefined ? dateFuck(new Date())  : even.target.value;
+    let num = even === undefined ? dateFuck(new Date()) : even.target.value;
     let dataFromTo = {start: num}
      let fet = await fetch('/getByDate', {method: 'POST', body: JSON.stringify(dataFromTo), headers : { "Content-Type": "application/json"}});
      let response = await fet.json();

@@ -3,24 +3,28 @@ body{
 }
 
 .menubox{
-    height: 110px;
-    width: 50%;
+    width: 83%;
     background-color: rgba(240, 230, 255, 0.507);
     text-align: center;
     border: 1px solid;
     border-radius: 6px;
-    float: left;
 }
 
+.mainmenu{
+    float: left;
+    min-width: 60%;
+}
+
+
 .cart{
-    height: 400px;
+    position: relative;
     width:  500px;
     background-color: rgba(240, 230, 255, 0.507);
     border: 1px solid;
     border-radius: 6px;
-    float: left;
-    margin-top: -250px;
-    margin-left: 100px;
+    float: right;
+    margin-top: -100px;
+    margin-left: 10px;
 }
 
 .item-selected{

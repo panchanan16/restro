@@ -14,13 +14,20 @@ async function adminhomeData(even) {
   let res  = await data.json();
   res.result.forEach((el)=>{
       let html = `<div class="order-item">
-      <span>${el.item_name}</span><span>${el.order_price}</span><span>${el.order_approved}</span><br>
-      <span>${new Date(el.order_date).toLocaleDateString()}</span><span>${el.room_no}</span><span>${el.order_qnt}</span>
+      <span>${el.item_name}</span><span>${el.order_price}</span><span>${el.order_approved}</span><span>${el.order_cus_number}</span><br>
+      <span>${new Date(el.order_date).toLocaleDateString()}</span><span>${el.room_no}</span><span>${el.order_qnt}</span><button onclick="updateTime(event)">update-time</button>
       </div>`
       document.getElementById("order-items").insertAdjacentHTML("afterbegin", html);
   })
 }
 adminhomeData();
+
+function updateTime(even){
+  let num = even.target.parentNode.childNodes;
+  console.log(num[4].innerHTML);
+  let time = prompt("Enter time in 'Minute'")
+  fetch('/updatetime', {method: 'POST', body: JSON.stringify({time : time, cus: num[4].innerHTML, date : dateFuck(new Date())}), headers : { "Content-Type": "application/json"}})
+}
 
 function changeInput(even) {
   document.getElementById('searchbar').placeholder = "search By Date"
@@ -61,12 +68,11 @@ document.getElementById("cancel").addEventListener('click', stopdata)
 function voice() {
   const audio = new Audio("orderVoice.mp3");
   audio.play();
-  console.log("audio is playing")
 }
 
-function NewTab() {
-  window.open("/insight");
-}
+function NewTab() {window.open("/insight");}
+
+function itemPage() {window.open("/add-item");}
 
 
 
