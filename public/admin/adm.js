@@ -1,5 +1,11 @@
 console.log("Welcome to main admin page");
 
+async function POSTreq(route, data){
+  let fet = await fetch(`/${route}`, {method: 'POST', body: JSON.stringify(data), headers: {'Content-Type': 'application/json'}})
+  let res = await fet.json();
+  return res;
+}
+
 function dateFuck(tarikh) {
   let {m, d, y} = {m : tarikh.getMonth() + 1, d: tarikh.getDate(),  y : tarikh.getFullYear()}
   m = m > 10 ? m : "0"+m
@@ -12,10 +18,11 @@ async function adminhomeData(even) {
   let dataFromTo = {start: dateFuck(new Date()), end: num}
   let data = await fetch('/adminhome',  {method: 'POST', body: JSON.stringify(dataFromTo), headers : { "Content-Type": "application/json"}});
   let res  = await data.json();
+  document.getElementById("order-items").innerHTML = "";
   res.result.forEach((el)=>{
-      let html = `<div class="order-item">
+      let html = `<div class="order-item ${el.order_serve ? 'served' : ''}" id="${el.order_id}">
       <span>${el.item_name}</span><span>${el.order_price}</span><span>${el.order_approved}</span><span>${el.order_cus_number}</span><br>
-      <span>${new Date(el.order_date).toLocaleDateString()}</span><span>${el.room_no}</span><span>${el.order_qnt}</span><button onclick="updateTime(event)">update-time</button>
+      <span>${new Date(el.order_date).toLocaleDateString()}</span><span>${el.room_no}</span><span>${el.order_qnt}</span><button onclick="updateTime(event)">update-time</button><button onclick="orderServed(event)">served</button>
       </div>`
       document.getElementById("order-items").insertAdjacentHTML("afterbegin", html);
   })
@@ -73,6 +80,13 @@ function voice() {
 function NewTab() {window.open("/insight");}
 
 function itemPage() {window.open("/add-item");}
+
+
+async function orderServed(eve){
+  let req = await POSTreq('orderserve', {id: eve.target.parentNode.id});
+  eve.target.parentNode.classList.add('served');
+  console.log(req);
+}
 
 
 

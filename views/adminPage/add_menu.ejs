@@ -13,7 +13,7 @@
    <div class="additem">
     <form action="/submit-items" method="post" enctype="multipart/form-data">
         <input type="text" name="itemName" placeholder="Enter Item name">
-        <input type="text" name="category" placeholder="Enter Item category">
+        category <select name="category" id="cat"></select>
         <input type="text" name="price" placeholder="Enter Item price">
         <input type="file" name="item-photo">
         <input type="text" name="offer" placeholder="Item offer if any">
@@ -30,7 +30,7 @@
     <h2>Update items here</h2>
     <form action="/updateMenuItem" method="post" enctype="multipart/form-data">
         <input type="text" name="itemName" placeholder="Enter Item name">
-        <input type="text" name="category" placeholder="Enter Item category">
+        category <select name="category" id="catU"></select>
         <input type="text" name="price" placeholder="Enter Item price">
         <input type="file" name="item-photo">
         <input type="text" name="offer" placeholder="Item offer if any">
@@ -40,6 +40,14 @@
             <option value="0">No</option>
          </select>
         <input type="submit" value="Update now">
+    </form>
+   </div>
+
+   <div class="categoryCreate">
+    <h1>Create New Category</h1>
+    <form action="/createcategory" method="post">
+        <input type="text" name="Category" placeholder="Create a new category">
+        <input type="submit" value="create now">
     </form>
    </div>
    <div class="updateitem">

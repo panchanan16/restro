@@ -13,9 +13,7 @@ route.get('/real', (req, res)=>{
       })
      setInterval(()=> {
         conn.query(`SELECT menu_items.item_name, orders_.* FROM orders_ JOIN menu_items ON orders_.item_id = menu_items.item_id WHERE order_status = '0'`, (err, result)=>{
-            if (result.length > 0) {
-              res.write(`data: ${JSON.stringify(result)}\n\n`);
-            }
+            if (result.length > 0) {res.write(`data: ${JSON.stringify(result)}\n\n`);}
         })
      }, 2000)
   
@@ -29,20 +27,15 @@ let arr = req.body.data;
 })
 
 route.post('/statusAccept', (req, res) => {
-  conn.query(`UPDATE orders_ SET order_status = '1', order_approved = 'accepted' WHERE order_id = '${req.body.Id}'`,
-   (err, result)=>{
-      if(!err){
-        res.send({msg : "Order Accepted"})
-      }
+  conn.query(`UPDATE orders_ SET order_status = '1', order_approved = 'accepted' WHERE order_id = '${req.body.Id}'`,(err, result)=>{
+      if(!err){res.send({msg : "Order Accepted"})}
   })
 })
 
 route.post('/statusReject', (req, res) => {
   conn.query(`UPDATE orders_ SET order_status = '1', order_approved = 'rejected' WHERE order_id = '${req.body.Id}'`,
    (err, result)=>{
-      if(!err){
-        res.send({msg : "Order Rejected"})
-      }
+      if(!err){res.send({msg : "Order Rejected"})}
   })
 })
 
@@ -55,9 +48,13 @@ route.post('/adminhome', (req, res)=>{
 route.post('/updatetime', (req, res)=>{
   console.log(req.body.time, req.body.cus, req.body.date);
   conn.query(`UPDATE orders_ SET order_update = '${req.body.time}' WHERE order_cus_number = '${req.body.cus}' AND order_date = '${req.body.date}'`, (err, result)=>{
-    if (!err) {
-      res.send({msg: "Time Updated Successfully!"});  
-    }
+    if (!err) {res.send({msg: "Time Updated Successfully!"});  }
+  })
+})
+
+route.post('/orderserve', (req, res)=>{
+  conn.query(`UPDATE orders_ SET order_serve = '1' WHERE order_id = '${req.body.id}'`, (err, result)=>{
+    if (!err) {res.send({msg: 'order served'})}
   })
 })
 

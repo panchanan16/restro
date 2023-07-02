@@ -47,3 +47,7 @@
 footer{
     float: left;
 }
+
+.served{
+    background-color : rgb(179, 255, 179);
+}

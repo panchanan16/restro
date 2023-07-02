@@ -6,14 +6,11 @@ const body = require('body-parser');
 
 route.use(body.json());
 
+route.use(body.urlencoded({ extended: false }))
+
 const storage = multer.diskStorage(
-    {
-        destination : (req, file, cb)=>{
-            cb(null, "public/uploads/");
-        },
-        filename: (req, file, cb) => {
-            cb(null, file.originalname)
-        },
+    {destination : (req, file, cb)=>{cb(null, "public/uploads/");},
+     filename: (req, file, cb) => {cb(null, file.originalname)},
     }
 )
 
@@ -53,6 +50,22 @@ route.post('/updateMenuItem', uploadStorage.single('item-photo'), (req, res) => 
             res.send({msg : "Item updated!"})
         }
    })
+})
+
+route.get('/categ-ories', (req, res)=>{
+    conn.query(`SELECT * FROM cat_agories`, (err, result)=>{
+        if (!err) {
+            res.send(result);
+        }
+    })
+})
+
+route.post('/createcategory', (req, res)=>{
+    conn.query(`INSERT INTO cat_agories (category) VALUES ('${req.body.Category}')`, (err, result)=>{
+        if(!err) {
+            res.send({msg: 'created category!'})
+        }
+    })
 })
 
 module.exports = route;

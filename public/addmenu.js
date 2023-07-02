@@ -38,6 +38,19 @@ function updateMenu(eve){
    updateForm[11].value = updateData[1].parentNode.id;
 }
 
+async function dynamicCategory(){
+  let fet = await fetch('/categ-ories');
+  let res = await fet.json();
+  console.log(res);
+  res.forEach((el)=>{
+    let html = `<option value="${el.cat_id}">${el.category}</option>`;
+    document.getElementById("cat").innerHTML += html;
+    document.getElementById("catU").innerHTML += html;
+  })
+}
+
+dynamicCategory();
+
 // async function SubmitUpdateMenu(e) {
 //     e.preventDefault();
 

@@ -46,3 +46,5 @@ ALTER TABLE `menu_items` ADD CONSTRAINT `item_category` FOREIGN KEY (`item_categ
 ALTER TABLE menu_items ADD COLUMN item_avalibility INT(3) AFTER item_offer;
 
 ALTER TABLE orders_ ADD COLUMN order_update VARCHAR(5) AFTER order_cus_number;
+
+ALTER TABLE orders_ ADD COLUMN order_serve VARCHAR(5) AFTER order_update;
