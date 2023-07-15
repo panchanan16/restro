@@ -1,67 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/additem.css">
     <title>add menu</title>
 </head>
+
 <body>
-    <h1>Add Items to  your menu here</h1>
+    <h1>Add Items to your menu here</h1>
 
 
-   <div class="additem">
-    <form action="/submit-items" method="post" enctype="multipart/form-data">
-        <input type="text" name="itemName" placeholder="Enter Item name">
-        category <select name="category" id="cat"></select>
-        <input type="text" name="price" placeholder="Enter Item price">
-        <input type="file" name="item-photo">
-        <input type="text" name="offer" placeholder="Item offer if any">
-         Availability:<select name="avail">
-            <option value="1">Yes</option>
-            <option value="0">No</option>
-         </select>
-        <input type="submit" value="submit now">
-    </form>
-   </div>
+    <div class="additem">
+        <form action="/submit-items" method="post" enctype="multipart/form-data">
+            <input type="text" name="itemName" placeholder="Enter Item name">
+            category <select name="category" id="cat"></select>
+            <input type="text" name="price" placeholder="Enter Item price">
+            <input type="text" name="half_price" placeholder="Enter Item half price">
+            <input type="file" name="item-photo">
+            <input type="text" name="offer" placeholder="Item offer if any">
+            Availability:<select name="avail">
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+            <input type="submit" value="submit now">
+        </form>
+    </div>
 
 
-   <div class="additem update-item hide">
-    <h2>Update items here</h2>
-    <form action="/updateMenuItem" method="post" enctype="multipart/form-data">
-        <input type="text" name="itemName" placeholder="Enter Item name">
-        category <select name="category" id="catU"></select>
-        <input type="text" name="price" placeholder="Enter Item price">
-        <input type="file" name="item-photo">
-        <input type="text" name="offer" placeholder="Item offer if any">
-        <input type="text" name="itemId">
-         Availability:<select name="avail">
-            <option value="1">Yes</option>
-            <option value="0">No</option>
-         </select>
-        <input type="submit" value="Update now">
-    </form>
-   </div>
+    <div class="additem update-item hide">
+        <h2>Update items here</h2>
+        <form action="/updateMenuItem" method="post" enctype="multipart/form-data">
+            <input type="text" name="itemName" placeholder="Enter Item name">
+            category <select name="category" id="catU"></select>
+            <input type="text" name="price" placeholder="Enter Item price">
+            <input type="file" name="item-photo">
+            <input type="text" name="offer" placeholder="Item offer if any">
+            <input type="text" name="itemId">
+            Availability:<select name="avail">
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+            <input type="submit" value="Update now">
+        </form>
+    </div>
 
-   <div class="categoryCreate">
-    <h1>Create New Category</h1>
-    <form action="/createcategory" method="post">
-        <input type="text" name="Category" placeholder="Create a new category">
-        <input type="submit" value="create now">
-    </form>
-   </div>
-   <div class="updateitem">
-    <table id="item_table">
-        <tr>
-          <th>Item name</th>
-          <th>Item category</th>
-          <th>Item price</th>
-          <th>Item offer</th>
-          <th>Action</th>
-        </tr>
-      </table>
-      
-   </div>
-   <script src="addmenu.js"></script>
+    <div class="categoryCreate">
+        <h1>Create New Category</h1>
+        <form action="/createcategory" method="post">
+            <input type="text" name="Category" placeholder="Create a new category">
+            <input type="submit" value="create now">
+        </form>
+    </div>
+    <!-- coupon table -->
+    <div class="coupon">
+        <h1>create your coupon here</h1>
+        <form action="/" method="post">
+            <input type="text" name="coupon_name" placeholder="Create a new Coupon"  style="display: block;">
+            <input type="text" name="coupon_price" placeholder="Enter the amount"  style="display: block;">
+            <input type="submit" value="create now">
+        </form>
+    </div>
+    <div class="updateitem">
+        <table id="item_table">
+            <tr>
+                <th>Item name</th>
+                <th>Item category</th>
+                <th>Item price</th>
+                <th>Item offer</th>
+                <th>Action</th>
+            </tr>
+        </table>
+
+    </div>
+    <script src="addmenu.js"></script>
 </body>
+
 </html>

@@ -23,7 +23,7 @@ route.get('/add-item', (req, res) => {
 route.post('/submit-items', uploadStorage.single('item-photo'), (req, res) =>{
 //    console.log(req.body);
    let pathName = `${req.file.destination.replace('public', '')}${req.file.originalname}`
-   conn.query(`INSERT INTO menu_items (item_name, item_category, item_price, item_image, item_offer, item_avalibility) VALUES ('${req.body.itemName}', '${req.body.category}', '${req.body.price}', '${pathName}', '${req.body.offer}', '${req.body.avail}');`, (err, result) => {
+   conn.query(`INSERT INTO menu_items (item_name, item_category, item_price, half_price, item_image, item_offer, item_avalibility) VALUES ('${req.body.itemName}', '${req.body.category}', '${req.body.price}', '${req.body.half_price}', '${pathName}', '${req.body.offer}', '${req.body.avail}');`, (err, result) => {
     if (!err) {
         res.send("Submitted successfully!");
     }else{console.log(err)}

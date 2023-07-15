@@ -56,6 +56,7 @@ function cowndown(out) {
     if (aim < 1) {clearInterval(x);}else{
       aim = aim - 1;
       let time = `${Math.floor(aim/60)} min ${aim%60}sec left`;
-      document.getElementById('cowndown').innerHTML = time; }  
+      document.getElementById('cowndown').innerHTML = time;
+     }  
   }, 1000);
 }

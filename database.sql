@@ -48,3 +48,15 @@ ALTER TABLE menu_items ADD COLUMN item_avalibility INT(3) AFTER item_offer;
 ALTER TABLE orders_ ADD COLUMN order_update VARCHAR(5) AFTER order_cus_number;
 
 ALTER TABLE orders_ ADD COLUMN order_serve VARCHAR(5) AFTER order_update;
+
+-- coupon table
+
+CREATE TABLE coupon_table_offers (
+     coupon_id int AUTO_INCREMENT PRIMARY KEY,
+     coupon_code VARCHAR(10) NOT NULL,
+     coupon_amount int(10)
+);
+
+-- menu_items table alter
+
+ALTER TABLE menu_items ADD COLUMN half_price INT(10) AFTER item_price;
