@@ -132,16 +132,22 @@
                           <p class="name">
                               <%= el.item_name %>
                           </p>
-                          <p class="fullPrice">
+                          
+                          <% if(el.half_price){%>
+                            <p class="fullPrice">
                               <i class="fa-solid fa-circle"></i><span>&nbsp;Full </span>
                               &#8377;<span class="weight"><%= el.item_price %></span>/-
                           </p>
-                          <% if(el.half_price){%>
                           <p class="halfPrice">
                               <i class="fa-solid fa-circle-half-stroke"></i>
                               Half&#8377;<span class="weight"><%= el.half_price %> </span>/-
                           </p>
-                          <% } %> 
+                          <% } else{%> 
+                            <p class="fullPrice">
+                              <i class="fa-solid fa-circle"></i><span>&nbsp;</span>
+                              &#8377;<span class="weight"><%= el.item_price %></span>/-
+                          </p>
+                          <% }%> 
                       </div>
                       <div class="itemImage">
                           <img src="<%= el.item_image %>" alt="food">
