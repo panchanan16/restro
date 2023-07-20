@@ -11,8 +11,15 @@ async function category_get() {
 }
 category_get();
 
-function removeItem(even) {
+function removeItem(even, className) {
   even.target.parentNode.parentNode.remove();
+  document.querySelectorAll(`.${className}`).forEach((elem)=>{
+    if (even.target.parentNode.parentNode.dataset.itemid === elem.dataset.itemid){
+      elem.querySelector('.spanAdd').classList.remove('active')
+      elem.querySelector('.qnt').classList.remove('active')
+      elem.querySelector('.num').innerHTML = 1;
+    }
+  })
   calculateBill('item-selected', 'bill');
 }
 
@@ -24,7 +31,7 @@ function addItemToCartWithAmount(eli, mainel, cartbox, arr, itemP) {
   ${validation != null ? `<p class="newOffer"><img src="/img/offer.svg" alt=""><span id="offApply">${mainel[3].querySelector("#offer").innerHTML}</span></p>` : ''}
   <div class="applyOffer">
     ${validation != null ? `<span onclick="applyOffer(event)"><img src="/img/offer.svg" alt="">Apply Offer</span>` : ''}
-    <span onclick="removeItem(event)">Remove&nbsp;&minus;</span>
+    <span onclick="removeItem(event, 'menubox')">Remove&nbsp;&minus;</span>
   </div>
   <div>
   <div class="qnt-cart wrapper">
@@ -58,11 +65,11 @@ function addtocart(eli, cartboxid) {
       let fullhalfqntvalue = popUpamount.querySelector('.num').innerHTML;
       let itemIdd = mainel[0].parentNode.dataset.itemid;
       cartbox.childNodes.forEach((element)=>{
-        if (element.dataset && element.dataset.itemid === itemIdd) {
+        if (element.dataset && element.dataset.itemid === itemIdd){
           element.querySelector('.num').innerHTML = fullhalfqntvalue;
+          element.querySelector('.price-item').innerHTML = itemP * fullhalfqntvalue;
           mainel[0].parentNode.querySelector('.num').innerHTML = fullhalfqntvalue;
           popUpamount.querySelector('.num').innerHTML = 1; }})
-      // document.getElementById('add-amount-button').removeEventListener('click', addAmountButton)
     }
     document.getElementById('add-amount-button').onclick = addAmountButton;
   } else {addItemToCartWithAmount(eli, mainel, cartbox);}
@@ -191,7 +198,6 @@ function qntCartIncrease(even, className) {let evenParent = even.target.parentNo
     calculateBill("item-selected", "bill");
 }
 
-
 function qntCartDecrease(even, className) {let evenParent = even.target.parentNode;
   let i = even.target.parentNode.childNodes[5].innerHTML;
   i--;
@@ -203,7 +209,7 @@ function qntCartDecrease(even, className) {let evenParent = even.target.parentNo
               elem.querySelector('.num').innerHTML = i;
               increasePriceOnQnt(evenParent.parentNode.parentNode, elem, i)  
               let addFooter = document.getElementById('item-added-quantity');
-              if (i < 1) {i = 1;
+              if (i < 1) {i = 1; 
                   even.target.parentNode.childNodes[5].innerHTML = i;
                   elem.querySelector('.num').innerHTML = i;
                   addFooter.innerHTML = addFooter.innerHTML - 1;
@@ -211,7 +217,9 @@ function qntCartDecrease(even, className) {let evenParent = even.target.parentNo
                   if (className === 'item-selected') {
                       even.target.parentNode.parentNode.querySelector('.spanAdd').classList.toggle('active');
                       even.target.parentNode.classList.toggle('active');
-                      elem.remove();}
+                      elem.remove();}else{
+                       evenParent.parentNode.parentNode.querySelector('.price-item').innerHTML = evenParent.parentNode.parentNode.dataset.itemprice;
+                      }
               } else { i = i }
           }
       })
