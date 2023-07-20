@@ -1,18 +1,10 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/menu.css">
-    <title>menu</title>
-</head>
+<!-- 
 <body>
     <h1>Welcome to Your menu</h1>
  <div class="category"><span onclick="filter_cat_al()">All</span></div>
  <br>
  <div class="item-amount hide">
-  full-<span>$300</span><input type="radio" name="amount-item" value="$300" checked="checked">
+  full-<span>$300</span><input type="radio" name="amount-item" value="300" checked="checked">
   half-<span>$150</span><input type="radio" name="amount-item" value="$150">
   <button id="add-amount-button">add now</button>
 </div>
@@ -109,7 +101,7 @@
             <span>Categories</span>
         </div>
         <main class="main-category scroll-foodItem">
-            <div class="categoryItem" onclick="filter_cat(event)">
+            <div class="categoryItem" onclick="filter_cat_al()">
                 <img src="/img/vegr.jpg" alt="food">
                 <p class="categoryItem-name">All</p>
             </div>
@@ -126,7 +118,7 @@
                 <div class="title-category">
                   <% if(items){%>
                     <% items.forEach((el)=>{ %>
-                  <div class="itemDescription" data-itemid="<%= el.item_id %>" data-cate="<%= el.category %>">
+                  <div class="itemDescription menubox" data-itemid="<%= el.item_id %>" data-cate="<%= el.category %>" data-cartAmount="1">
                       <div class="itemName">
                           <span class="fa-solid fa-dice-one"></span>
                           <p class="name">
@@ -135,34 +127,35 @@
                           
                           <% if(el.half_price){%>
                             <p class="fullPrice">
-                              <i class="fa-solid fa-circle"></i><span>&nbsp;Full </span>
+                              <i class="fa-solid fa-circle"></i><span>&nbsp;Full</span>
                               &#8377;<span class="weight"><%= el.item_price %></span>/-
                           </p>
                           <p class="halfPrice">
                               <i class="fa-solid fa-circle-half-stroke"></i>
-                              Half&#8377;<span class="weight"><%= el.half_price %> </span>/-
+                              Half&#8377;<span class="weight" id="half_price"><%= el.half_price %> </span>/-
                           </p>
                           <% } else{%> 
                             <p class="fullPrice">
                               <i class="fa-solid fa-circle"></i><span>&nbsp;</span>
-                              &#8377;<span class="weight"><%= el.item_price %></span>/-
+                              &#8377;<span class="weight price-item"><%= el.item_price %></span>/-
                           </p>
                           <% }%> 
+                          <p>Available</p> 
                       </div>
                       <div class="itemImage">
                           <img src="<%= el.item_image %>" alt="food">
                           <span class="spanAdd">Add&nbsp;&nbsp;&plus;</span>
                           <div class="qnt wrapp">
                               <p class="quantity">Qt:</p>
-                              <p class="minus">-</p>
+                              <p class="minus" onclick="qntCartDecrease(event, 'item-selected')">-</p>
                               <p class="num">1</p>
-                              <p class="plus">+</p>
+                              <p class="plus" onclick="qntCartIncrease(event, 'item-selected')">+</p>
                           </div>
                           <% if(el.item_offer){%>
                           <p class="offer">
-                              <span><%= el.item_offer %>% off </span>
+                              <span id="offer"><%= el.item_offer %>% off </span>
                           </p>
-                          <% } %> 
+                          <% } %>
                       </div>
                   </div>
               <% })}%>  
@@ -186,7 +179,7 @@
                 <span class="circle"></span>
             </div>
             <div class="icons">
-                <span class="fa-solid fa-utensils icon"></span>
+                <span class="fa-solid fa-utensils icon" onclick="redirectToMyOrder()"></span>
                 <span class="name">My Orders</span>
                 <span class="circle"></span>
             </div>
@@ -199,28 +192,29 @@
         </div>
         <div class="footer-cart">
             <p class="name-cart"><span class="fa-solid fa-bag-shopping"></span>
-            <span>1</span>&nbsp;ITEM ADDED</p>
+            <span id="item-added-quantity">0</span>&nbsp;ITEM ADDED</p>
             <p class="next-name-cart" onclick="gotocart()">Go to Cart<i class="fa-solid fa-arrow-right"></i></p>
         </div>
         <div class="footer-desc">
                 All rights reserved &nbsp;&nbsp;&nbsp;&nbsp;© Raynrel Infotec @2023
         </div>
-        <div class="pricing-half-full hide">
+        <!-- half Full pop up box -->
+        <div class="pricing-half-full hide item-amount">
             <span id="cross">&times;</span>
             <div class="quantity">
                 <p>Quantity</p>
                 <p class="small">Select any 1 option</p>
-                <p class="farp half"><span>Half</span><input type="radio" name="fuck"></p>
-                <p class="farp full"><span>Full</span><input type="radio" name="fuck"></p>
+                <p class="farp half"><span>Half</span><input type="radio" name="fuck" value="" checked="checked"></p>
+                <p class="farp full"><span>Full</span><input type="radio" name="fuck" value=""></p>
             </div>
             <div class="flexbtn">
                 <div class="qnt wrapp">
                     <p class="quantity">Qt:</p>
-                    <p class="minus">-</p>
+                    <p class="minus" onclick="qntCartDecrease(event, null)">-</p>
                     <p class="num">1</p>
-                    <p class="plus">+</p>
+                    <p class="plus" onclick="qntCartIncrease(event, null)">+</p>
                 </div>
-                <div class="addItem">
+                <div class="addItem" id="add-amount-button">
                     <p>Add Item <span>&#8377;500</span></p>
                 </div>
             </div>
@@ -248,57 +242,18 @@
                 <span>APPLY</span>
             </div>
         </div>
-        <main class="add-to-cart">
-            <div class="itemAdded">  
-                <p><span class="fa-solid fa-dice-one"></span>
-                    Special Paneer Kebab Biriyani Special Paneer Kebab Biriyani 
-                </p>
-                <p>
-                    <span>&#8377;</span>
-                    <span>350</span>/-
-                </p>
-                <p class="newOffer"><img src="/img/offer.svg" alt=""><span>15% off</span></p>
-                <div class="applyOffer">
-                    <span><img src="/img/offer.svg" alt="">
-                    Apply Offer</span>
-                    <span>Remove&nbsp;&minus;</span>
-                </div>
-                <div class="qnt wrapper">
-                    <span class="quantity">Qt:</span>
-                    <span class="minus">-</span>
-                    <span class="num">1</span>
-                    <span class="plus">+</span>
-                </div>
-            </div>
-
-            <div class="itemAdded">  
-                <p><span class="fa-solid fa-dice-one"></span>
-                    Special Paneer Kebab Biriyani Special Paneer Kebab Biriyani 
-                </p>
-                <p>
-                    <span>&#8377;</span>
-                    <span>350</span>/-
-                </p>
-                <div class="applyOffer">
-                    <span>Remove&nbsp;&minus;</span>
-                </div>
-                <div class="qnt wrapper">
-                    <span class="quantity">Qt:</span>
-                    <span class="minus">-</span>
-                    <span class="num">1</span>
-                    <span class="plus">+</span>
-                </div>
-            </div>
+        <main class="add-to-cart" id="cartbox">
+            
         </main>
         <div class="lastBtn widthMargin">
-            <span id="cancelOrder">Total &#8377;<span>500</span>/-</span>
-            <span id="placeOrder">Place Order</span>
+            <span id="cancelOrder">Total &#8377;<span id="bill">500</span>/-</span>
+            <span id="placeOrder" onclick="calldata()">Place Order</span>
         </div>
     </section>
 
     <!-- ========JAVASCRIPT FILES======= -->
     <script src="https://kit.fontawesome.com/7b8292bbe5.js" crossorigin="anonymous"></script>
-    <script src="../main.js"></script>
-    <script src="../menu.js"></script>  
+    <script src="../menu.js"></script> 
+    <script src="../main.js"></script> 
 </body>
 </html>

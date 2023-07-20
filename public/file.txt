@@ -1,0 +1,9 @@
+<div class="item-selected" data-itid="${eli.target.parentNode.dataset.itemid}">
+  <span>${mainel[1].innerHTML}</span><span class="price-item">${arr!=undefined?arr:mainel[3].innerHTML}</span> <span id="offApply">${eli.target.parentNode.querySelector("#offer").innerHTML}</span><br>
+  <span>Qt: 1</span><button id="applyOffer" onclick="applyOffer(event)">Apply offer</button><button onclick="removeItem(event)">remove</button></div>
+
+  //with out offer
+
+  <div class="item-selected" data-itid="${eli.target.parentNode.dataset.itemid}">
+  <span>${mainel[1].innerHTML}</span><span class="price-item">${arr!=undefined?arr:mainel[3].innerHTML}</span><br>
+  <span>Qt: 1</span><button onclick="removeItem(event)">remove</button></div>
