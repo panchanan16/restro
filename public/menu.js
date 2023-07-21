@@ -15,9 +15,11 @@ function removeItem(even, className) {
   even.target.parentNode.parentNode.remove();
   document.querySelectorAll(`.${className}`).forEach((elem)=>{
     if (even.target.parentNode.parentNode.dataset.itemid === elem.dataset.itemid){
+      let v = document.querySelector('#item-added-quantity')
       elem.querySelector('.spanAdd').classList.remove('active')
       elem.querySelector('.qnt').classList.remove('active')
       elem.querySelector('.num').innerHTML = 1;
+      v.innerHTML = v.innerHTML - 1;
     }
   })
   calculateBill('item-selected', 'bill');
