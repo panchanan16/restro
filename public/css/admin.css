@@ -1,53 +1,194 @@
-#eachOrder{
-    height: 100px;
-    width: 80%;
-    text-align: center;
-    border: 1px solid;
-    margin: 20px;
-}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,800;0,900;1,700&display=swap');
+:root{
+    --Dark-primary: hsl(285, 100%, 15%);
+    --secondary-color: hsl(285, 40%, 50%);
+    --tertiary-color: hsl(286, 100%, 86%);
+    --White: rgb(255, 255, 255);
+    --gradient-1: linear-gradient(to bottom, #39004d 0%, #bf00ff 100%);
+    --border-radius: 4px;
 
-.Home{
-    float: left;
+    --box-shadow-1: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
-
-.data{
-    float: left;
-    height: 400px;
-    width: 500px;
-    border: 1px solid;
-    margin-left : 50px
+::-webkit-scrollbar{
+    width: 0 !important;
 }
-
-.order-item{
-    height: 80px;
-    width: 400px;
-    border: 2px solid;
-    text-align: center;
-    margin: 10px;
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    user-select: none;
 }
-
-.order-item span{
+body{
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+}
+.title-container{
+    background: var(--tertiary-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 3rem;
+    position: relative;
+}
+#title-header{
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--Dark-primary);
+}
+.title-container .search-box{
+    display: flex;
+    align-items: center;
+    gap: 1px;
+    flex-wrap: wrap;
+}
+#searchbar{
+    font-size: 15px;
+    padding: 8px 15px;
+    border-radius: 5px 0 0 5px;
     display: inline-block;
-    height: 30px;
-    min-width: 70px;
-    background-color: antiquewhite;
-    margin-left: 10px;
-    margin-top: 6px;
-    text-align: center;
-    border: 1px solid;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    flex-grow: 1;
+}
+#searchbar:focus{
+    outline: 2px solid var(--Dark-primary);
+}
+.title-container .search-box select{
+    padding: 7px;
+    background: var(--secondary-color);
+    color: var(--White);
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+}
+#data-data-value{
+    border-radius: 0 5px 5px 0;
+}
+.title-login{
+    font-weight: 500;
 }
 
-.responsed-order{
-    height: 450px;
-    width: 450px;
-    border: 1px solid;
-    overflow: auto;
+.container{
+    width: 80%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 1rem;
+    padding: 1rem 0;
+}
+.container :is(.box-1, .box-2){
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 1.5rem;
+    box-shadow: var(--box-shadow-1);
+    border-radius: 5px;
+}
+#orders, #order-items{
+    overflow-y: scroll;
+    height: 75vh;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+#eachOrder{
+    background: var(--gradient-1);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    color: var(--White);
+    line-height: 2;
+}
+#orderNmae{
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+#orderNmae span{
+    font-size: 1rem;
+}
+.container p{
+    font-weight: 500;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.btn{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.container button{
+    flex-grow: 1;
+    padding: 10px 0;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-radius: 5px;
+    font-family: 'Poppins', sans-serif;
+    color: var(--White);
+    cursor: pointer;
+    transition: 500ms ease;
+}
+.box-1 button:hover{
+    box-shadow: var(--box-shadow-1);
+    padding: 15px 0;
+}
+#acceptBtn{
+    background: green;
+}
+#rjctBtn{
+    background: red;
 }
 
-footer{
-    float: left;
-}
 
+/* ----BOX-2----- */
+.container .box-2{
+    padding: 1.5rem 1rem;
+}
+#order-items{
+    padding: 0 1rem;
+}
+.orderItem{
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.box-2 button{
+    background: var(--gradient-1);
+}
+.box-2 p{
+    font-size: 1rem;
+}
 .served{
-    background-color : rgb(179, 255, 179);
+    background: rgb(151, 255, 116);
+}
+#name{
+    font-weight: 600;
+    text-transform: uppercase;
+}
+#name b{
+    font-weight: 500;
+    text-transform: capitalize;
+}
+#act{
+    color: #39004d;
+    font-weight: 500;
+}
+.box-2 button{
+    padding: 5px 0;
+    font-size: 15px;
+}
+.box-2 button:hover{
+    background: var(--Dark-primary);
+}
+#act{
+    background: green;
+    color: var(--White);
+    display: inline-block;
+    padding: 3px;
+    margin: 4px 0;
+    font-size: 13px;
+    border-radius: 4px;
 }
