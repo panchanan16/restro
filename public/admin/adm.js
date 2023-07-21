@@ -20,10 +20,17 @@ async function adminhomeData(even) {
   let res  = await data.json();
   document.getElementById("order-items").innerHTML = "";
   res.result.forEach((el)=>{
-      let html = `<div class="order-item ${el.order_serve ? 'served' : ''}" id="${el.order_id}">
-      <span>${el.item_name}</span><span>${el.order_price}</span><span>${el.order_approved}</span><span>${el.order_cus_number}</span><br>
-      <span>${new Date(el.order_date).toLocaleDateString()}</span><span>${el.room_no}</span><span>${el.order_qnt}</span><button onclick="updateTime(event)">update-time</button><button onclick="orderServed(event)">served</button>
-      </div>`
+      let html = `<div class="orderItem ${el.order_serve ? 'served' : ''}" id="${el.order_id}">
+      <p id="name">${el.item_name}<b>Room No: <span>${el.room_no}</span></b> </p>
+      <p><span>&#8377;${el.order_price}</span><span>${el.order_cus_number}</span></p>
+      <p><span>Qt: ${el.order_qnt}</span>
+          <span>${new Date(el.order_date).toLocaleDateString()}</span>
+      </p>
+      <p id="act">${el.order_approved}</p>
+      <div class="btn">
+          <button onclick="updateTime(event)">update-time</button><button onclick="orderServed(event)">served</button>
+      </div>
+  </div>`
       document.getElementById("order-items").insertAdjacentHTML("afterbegin", html);
   })
 }
@@ -48,10 +55,16 @@ sseSource.onmessage = function (event) {
     let indata = JSON.parse(event.data);
     indata.forEach((el)=> {
       let html = `<div id="eachOrder" data-ordid="${el.order_id}">
-      <span>${el.item_name}</span><span>${el.order_price}</span><br>
-      <span>${el.order_qnt}</span><span>room no : ${el.room_no}</span><br>
-      <span>${el.order_time}</span><span>${new Date(el.order_date).toLocaleDateString()}</span><img src="" alt="no image"><br>
-      <button id="acceptBtn" onclick="orderAccept(event)">Accept</button><button onclick="orderReject(event)">Reject</button>
+            <p id="orderNmae">${el.item_name} <span>&#8377;${el.order_price}</span></p>
+            <p><span>Qt: ${el.order_qnt}</span>
+                <span>Room No:${el.room_no}</span>
+                
+            </p>
+            <p><span>${el.order_time}</span> <span>${new Date(el.order_date).toLocaleDateString()}</span></p>
+            <div class="btn">
+                <button id="acceptBtn" onclick="orderAccept(event)">Accept</button>
+                <button id="rjctBtn" onclick="orderReject(event)">Reject</button>
+            </div>
         </div>`
     space.insertAdjacentHTML("afterbegin", html);
     });
@@ -61,16 +74,16 @@ function stopdata() {sseSource.close()}
 function orderAccept(evet){
   let orderId = {Id: document.getElementById("eachOrder").dataset.ordid}
   fetch('/statusAccept', {method: 'POST', body: JSON.stringify(orderId), headers: {'Content-Type': 'application/json'}}).then((res)=>{return res.json()}).then((data)=>{console.log(data)});
-  evet.target.parentNode.remove();
+  evet.target.parentNode.parentNode.remove();
 }
 
 function orderReject(evet){
   let orderId = {Id: document.getElementById("eachOrder").dataset.ordid}
   fetch('/statusReject', {method: 'POST', body: JSON.stringify(orderId), headers: {'Content-Type': 'application/json'}}).then((res)=>{return res.json()}).then((data)=>{console.log(data)});
-  evet.target.parentNode.remove();
+  evet.target.parentNode.parentNode.remove();
 }
 
-document.getElementById("cancel").addEventListener('click', stopdata)
+// document.getElementById("cancel").addEventListener('click', stopdata)
 
 function voice() {
   const audio = new Audio("orderVoice.mp3");
@@ -84,7 +97,7 @@ function itemPage() {window.open("/add-item");}
 
 async function orderServed(eve){
   let req = await POSTreq('orderserve', {id: eve.target.parentNode.id});
-  eve.target.parentNode.classList.add('served');
+  eve.target.parentNode.parentNode.classList.add('served');
   console.log(req);
 }
 

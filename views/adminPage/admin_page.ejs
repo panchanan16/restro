@@ -8,32 +8,61 @@
     <title>main admin page</title>
 </head>
 <body>
-    <h1>Welcome to Admin page</h1>
-    <div>
-        <input type="text" placeholder="search by number" id="searchbar">
-        <select name="cars" id="datasearchmethod" onchange="changeInput(event)">
-            <option value="number">by Number</option>
-            <option value="date">by date</option>
-          </select>
-        <select name="cars" id="data-data-value" onchange="adminhomeData(event)">
-            <option value="7">last 7 days</option>
-            <option value="30">last 30 days</option>
-            <option value="60">last 60 days</option>
-            <option value="90">last 90 days</option>
-            <option value="180">last 6 month</option>
-          </select>
-    </div>
-    <section class="Home">
-        <div class="responsed-order">
-            <div class="order-items" id="order-items"></div>
+    <section class="title-container">
+        <h3 id="title-header">Mommy's Kitchen</h3>
+        <div class="search-box">
+            <input type="text" id="searchbar" placeholder="Search for order">
+            <select name="cars" id="datasearchmethod" onchange="changeInput(event)">
+                <option value="number">by Number</option>
+                <option value="date">by date</option>
+              </select>
+            <select name="cars" id="data-data-value" onchange="adminhomeData(event)">
+                <option value="7">last 7 days</option>
+                <option value="30">last 30 days</option>
+                <option value="60">last 60 days</option>
+                <option value="90">last 90 days</option>
+                <option value="180">last 6 month</option>
+              </select>
+        </div>
+        <div class="title-login">
+            <p>Howdy, <span id="chef-name">Kankan</span></p>
         </div>
     </section>
-    <div class="data" id="data">
-        <div class="orders" id="orders"></div>
-    </div>
-    <button id="cancel">Cancel</button><button id="play" onclick="voice()">Play</button>
-    <button onclick="itemPage()">add Item</button>
-    <audio id="orderAudio" src="orderVoice.mp3"></audio>
+    <!-- ==========HEADER SECTION ENDS HERE=========== -->
+    <section class="container">
+        <div class="box-1" id="data">
+            <div class="orders" id="orders">
+                <!-- <div id="eachOrder" data-ordid="${el.order_id}">
+                    <p id="orderNmae">Chicken Biriyani <span>&#8377;500</span></p>
+                    <p><span>Qt: 1</span>
+                        <span>Room No:2</span>
+                        
+                    </p>
+                    <p><span>12:00</span> <span>12/07/23</span></p>
+                    <div class="btn">
+                        <button id="acceptBtn" onclick="orderAccept(event)">Accept</button>
+                        <button id="rjctBtn" onclick="orderReject(event)">Reject</button>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+        <div class="box-2">
+            <div class="order-items" id="order-items">
+                <!-- <div class="orderItem ${el.order_serve ? 'served' : ''}" id="${el.order_id}">
+                    <p id="name">Chicken Biriyani<b>Room No: <span>2</span></b> </p>
+                    <p><span>&#8377;500</span><span>6002649802</span></p>
+                    <p><span>Qt: 1</span>
+                        <span>12/07/23</span>
+                    </p>
+                    <p></p>
+                    <p id="act">Accepted</p>
+                    <div class="btn">
+                        <button onclick="updateTime(event)">update-time</button><button onclick="orderServed(event)">served</button>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </section>
     <%- include('../common/footer') %>
     <script src="../admin/adm.js"></script>
 </body>
