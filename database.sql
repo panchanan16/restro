@@ -13,12 +13,12 @@ CREATE TABLE cat_agories (
 CREATE TABLE menu_items (
      item_id int AUTO_INCREMENT PRIMARY KEY,
      item_name VARCHAR(60),
-     item_category INT(60) NOT NULL,
+     item_category INT NOT NULL,
      item_price INT(60),
      item_image VARCHAR(500),
      item_offer VARCHAR(10),
      item_avalibility INT(3),
-     FOREIGN KEY (cat_id) REFERENCES cat_agories(cat_id)
+     FOREIGN KEY (item_category) REFERENCES cat_agories(cat_id)
 );
 
 CREATE TABLE orders_ (
@@ -35,18 +35,11 @@ CREATE TABLE orders_ (
      order_time TIME
 );
 
-ALTER TABLE `orders_` ADD CONSTRAINT `item_id` FOREIGN KEY (`i_id`) REFERENCES `menu_items`(`item_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
 ALTER TABLE orders_ ADD COLUMN order_cus_number VARCHAR(12) AFTER order_time;
 
-ALTER TABLE menu_items ADD COLUMN item_category VARCHAR(60) AFTER item_name;
-
-ALTER TABLE `menu_items` ADD CONSTRAINT `item_category` FOREIGN KEY (`item_category`) REFERENCES `cat_agories`(`cat_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
-ALTER TABLE menu_items ADD COLUMN item_avalibility INT(3) AFTER item_offer;
+ALTER TABLE `orders_` ADD CONSTRAINT `item_id` FOREIGN KEY (`item_id`) REFERENCES `menu_items`(`item_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 ALTER TABLE orders_ ADD COLUMN order_update VARCHAR(5) AFTER order_cus_number;
-
 ALTER TABLE orders_ ADD COLUMN order_serve VARCHAR(5) AFTER order_update;
 
 -- coupon table
@@ -60,3 +53,6 @@ CREATE TABLE coupon_table_offers (
 -- menu_items table alter
 
 ALTER TABLE menu_items ADD COLUMN half_price INT(10) AFTER item_price;
+
+-- coupon table alter
+ALTER TABLE coupon_table_offers ADD COLUMN discount INT(10) AFTER coupon_code;

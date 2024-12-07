@@ -21,7 +21,6 @@ route.get('/add-item', (req, res) => {
 })
 
 route.post('/submit-items', uploadStorage.single('item-photo'), (req, res) =>{
-//    console.log(req.body);
    let pathName = `${req.file.destination.replace('public', '')}${req.file.originalname}`
    conn.query(`INSERT INTO menu_items (item_name, item_category, item_price, half_price, item_image, item_offer, item_avalibility) VALUES ('${req.body.itemName}', '${req.body.category}', '${req.body.price}', '${req.body.half_price}', '${pathName}', '${req.body.offer}', '${req.body.avail}');`, (err, result) => {
     if (!err) {
@@ -53,18 +52,25 @@ route.post('/updateMenuItem', uploadStorage.single('item-photo'), (req, res) => 
 })
 
 route.get('/categ-ories', (req, res)=>{
-    conn.query(`SELECT * FROM cat_agories`, (err, result)=>{
-        if (!err) {
-            res.send(result);
-        }
+    conn.query(`SELECT * FROM cat_agories`, (err, result)=>{if (!err) {res.send(result);}
     })
 })
 
 route.post('/createcategory', (req, res)=>{
     conn.query(`INSERT INTO cat_agories (category) VALUES ('${req.body.Category}')`, (err, result)=>{
-        if(!err) {
-            res.send({msg: 'created category!'})
-        }
+        if(!err) {res.send({msg: 'created category!'})}
+    })
+})
+
+route.post('/create-coupon', (req, res)=>{
+    conn.query(`INSERT INTO coupon_table_offers (coupon_code, discount, coupon_amount) VALUES ('${req.body.coupon_name}', '${req.body.coupon_discount}', '${req.body.coupon_price}')`, (err, result)=>{
+        if(!err) {res.send({msg: 'created coupon!'})}
+    })
+})
+
+route.get('/get-coupon', (req, res)=>{
+    conn.query(`SELECT * FROM coupon_table_offers`, (err, result)=>{
+        if (!err) {res.send(result);}
     })
 })
 

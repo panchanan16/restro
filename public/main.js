@@ -52,6 +52,4 @@ full.onclick = function () {full.classList.toggle("active");
 
 function gotocart() { document.querySelector('.my-cart').classList.remove('hide'); }
 
-document.getElementById('see-all-Offer').onclick = function () { document.querySelector('.all-offers').classList.toggle('hide'); }
-
 

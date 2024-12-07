@@ -22,12 +22,14 @@ function calculateBill(className, idName) {
 
 async function mycartData(){
     if (document.cookie.split(";")[0].split("=")[1] != undefined) {
-      const fet = await fetch('/getcartitem', {method: 'POST', body: JSON.stringify({num : document.cookie.split(";")[0].split("=")[1], date: dateFuck(new Date())}), headers :{"Content-Type": "application/json"}})
+      let send = {num: document.cookie.split(";")[0].split("=")[1], date: dateFuck(new Date())}
+      const fet = await fetch(`/getcartitem/${send.num}/${send.date}`);
       const response = await fet.json() ;
       console.log(response)
       myordercarteach(response)
     }
   }
+  // {method: 'POST', body: JSON.stringify({num : document.cookie.split(";")[0].split("=")[1], date: dateFuck(new Date())}), headers :{"Content-Type": "application/json"}}
 
   let timeValue = '';
   

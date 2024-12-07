@@ -23,7 +23,7 @@ route.post('/user/admin', (req, res) => {
     })
 })
 
-route.get('/log', midwar, (req, res)=>{
+route.get('/log', (req, res)=>{
     res.render("adminPage/admin_page.ejs")    
 })
 

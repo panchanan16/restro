@@ -15,8 +15,7 @@ route.get('/real', (req, res)=>{
         conn.query(`SELECT menu_items.item_name, orders_.* FROM orders_ JOIN menu_items ON orders_.item_id = menu_items.item_id WHERE order_status = '0'`, (err, result)=>{
             if (result.length > 0) {res.write(`data: ${JSON.stringify(result)}\n\n`);}
         })
-     }, 2000)
-  
+     }, 2000)  
 })
 
 route.post('/order', (req, res) => {

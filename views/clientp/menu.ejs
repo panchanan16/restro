@@ -135,8 +135,8 @@
                 <span class="name">Popular Items</span>
                 <span class="circle"></span>
             </div>
-            <div class="icons">
-                <span class="fa-solid fa-utensils icon" onclick="redirectToMyOrder()"></span>
+            <div class="icons"  onclick="redirectToMyOrder()">
+                <span class="fa-solid fa-utensils icon"></span>
                 <span class="name">My Orders</span>
                 <span class="circle"></span>
             </div>
@@ -185,25 +185,17 @@
             <span>ITEMS ADDED</span>
             <span id="times">X</span>
         </div>
-        <div id ="see-all-Offer" class="widthMargin">
+        <div id ="see-all-Offer" class="widthMargin" onclick="getCoupon()">
             <img src="/img/offer.svg" alt="">
             <span>See all offers</span> 
         </div>
         <div class="all-offers hide widthMargin">
-            <div class="offerBox">
-                <p>15% OFF upto &#8377;500</p>
-                <span>APPLY</span>
-            </div>
-            <div class="offerBox">
-                <p>15% OFF upto &#8377;500</p>
-                <span>APPLY</span>
-            </div>
         </div>
         <main class="add-to-cart" id="cartbox">
             
         </main>
         <div class="lastBtn widthMargin">
-            <span id="cancelOrder">Total &#8377;<span id="bill">500</span>/-</span>
+            <span id="cancelOrder">Total &#8377;<span id="bill"></span>/-</span>
             <span id="placeOrder" onclick="calldata()">Place Order</span>
         </div>
     </section>

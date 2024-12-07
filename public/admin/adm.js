@@ -96,7 +96,7 @@ function itemPage() {window.open("/add-item");}
 
 
 async function orderServed(eve){
-  let req = await POSTreq('orderserve', {id: eve.target.parentNode.id});
+  let req = await POSTreq('orderserve', {id: eve.target.parentNode.parentNode.id});
   eve.target.parentNode.parentNode.classList.add('served');
   console.log(req);
 }

@@ -1,11 +1,16 @@
 
 let room = window.location.href.toString().split("/")[4];
+
+async function FETCHdata(link) {
+  let fet = await fetch(`/${link}`)
+  return await fet.json();
+}
+
 async function category_get() {
-  let fet = await fetch('/category')
-  let res = await fet.json();
-  res.forEach(elem => {
+  let data = await FETCHdata('category');
+  data.forEach(elem => {
     let html = `<div class="categoryItem"><img src="/img/vegr.jpg" alt="food">
-    <p class="categoryItem-name"  onclick="filter_cat(event)">${elem.category}</p></div>`;
+    <p class="categoryItem-name" onclick="filter_cat(event)">${elem.category}</p></div>`;
     document.querySelector('.main-category').innerHTML += html;
   });
 }
@@ -55,8 +60,6 @@ function addtocart(eli, cartboxid) {
     popUpamount.querySelector('.half').childNodes[1].value = mainel[1].childNodes[7].childNodes[3].innerHTML;
     popUpamount.querySelector('.full').childNodes[1].value = mainel[1].childNodes[5].childNodes[4].innerHTML;
     function addAmountButton(){
-      let add = document.getElementById('item-added-quantity')
-      add.innerHTML = Number(add.innerHTML) + 1;
       let itemP = popUpamount.querySelector('input[name="fuck"]:checked').value
       let arrAmount = `<i class="fa-solid fa-circle"></i><span>&nbsp;</span>
        &#8377;<span class="weight price-item">${itemP}</span>/-`
@@ -68,10 +71,12 @@ function addtocart(eli, cartboxid) {
       let itemIdd = mainel[0].parentNode.dataset.itemid;
       cartbox.childNodes.forEach((element)=>{
         if (element.dataset && element.dataset.itemid === itemIdd){
+          itemAddedFunction();
           element.querySelector('.num').innerHTML = fullhalfqntvalue;
           element.querySelector('.price-item').innerHTML = itemP * fullhalfqntvalue;
           mainel[0].parentNode.querySelector('.num').innerHTML = fullhalfqntvalue;
           popUpamount.querySelector('.num').innerHTML = 1; }})
+      calculateBill("item-selected", "bill");
     }
     document.getElementById('add-amount-button').onclick = addAmountButton;
   } else {addItemToCartWithAmount(eli, mainel, cartbox);}
@@ -85,28 +90,20 @@ function calculateBill(className, idName) {
   } else {document.getElementById(idName).innerHTML = "";}
 }
 
-function calldata() {
-  console.log('btn clicked hence proved')
+async function sendItemToCook(link, Data) {
+  let fet = await fetch(`/${link}`, {method: "POST", body: JSON.stringify({ data: collectdata(Data) }),
+  headers: {"Content-Type": "application/json"}})
+  return await fet.json();
+}
+
+async function calldata() {
   let num ;
   if (document.cookie.split(";")[0].split("=")[1] === undefined) {
     num = setcook();
-    console.log(collectdata(num));
-    fetch("/order", {
-      method: "POST",
-      body: JSON.stringify({ data: collectdata(num) }),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).then((response) => { return response.json() }).then((res) => { console.log(res) })
+    console.log(await sendItemToCook('order', num))
   } else {
     num = document.cookie.split(";")[0].split("=")[1];
-    fetch("/order", {
-      method: "POST",
-      body: JSON.stringify({ data: collectdata(num) }),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).then((response) => { return response.json() }).then((res) => { console.log(res) })
+    console.log(await sendItemToCook('order', num))
   }
 }
 
@@ -124,17 +121,14 @@ function collectdata(numb) {
   }
 }
 
-let orderBtn = document.querySelectorAll('#orderNow')
-orderBtn.forEach((el) => {
-  el.addEventListener('click', calldata);
-})
-
 function applyOffer(even) {
   if (even.target.parentNode.parentNode.querySelector("#offApply") != null) {
-    let off = Number(even.target.parentNode.parentNode.querySelector("#offApply").innerHTML.replace(/off|%/g, ""));
-    let ogPrice = Number(even.target.parentNode.parentNode.querySelector(".price-item").innerHTML);
+    let offp = even.target.parentNode.parentNode;
+    let off = Number(offp.querySelector("#offApply").innerHTML.replace(/off|%/g, ""));
+    let ogPrice = Number(offp.querySelector(".price-item").innerHTML);
     let discountPrice = ogPrice - (off / 100) * ogPrice
-    even.target.parentNode.parentNode.querySelector(".price-item").innerHTML = `${discountPrice}`
+    offp.querySelector(".price-item").innerHTML = `${discountPrice}`
+    offp.dataset.itemprice = offp.dataset.itemprice - (off/100) * offp.dataset.itemprice;
     calculateBill("item-selected", "bill");
   } else { console.log("No  discount available on this product") }
   even.target.removeAttribute("onclick");
@@ -167,38 +161,43 @@ function redirectToMyOrder() {
   location.href = 'myAllorders';
 }
 
+function itemAddedFunction() {
+  let add = document.getElementById('item-added-quantity')
+  document.querySelector('.footer-cart').style.display = 'flex';
+  document.querySelector('.footer-icons').style.bottom = "4rem";
+  add.innerHTML = Number(add.innerHTML) + 1;
+}
+
 let spanadd = document.querySelectorAll(".spanAdd");
 spanadd.forEach((el) => {
   el.onclick = function () {
-    if (el.parentNode.parentNode.querySelector('.halfPrice') === null) {let add = document.getElementById('item-added-quantity')
+    if (el.parentNode.parentNode.querySelector('.halfPrice') === null) {
       el.classList.toggle("active");
       el.parentNode.querySelector('.wrapp').classList.toggle("active");
-      document.querySelector('.footer-cart').style.display = 'flex';
-      document.querySelector('.footer-icons').style.bottom = "4rem";
-      add.innerHTML = Number(add.innerHTML) + 1;
+      itemAddedFunction();
     }
     addtocart(event, 'cartbox');
   }})
 
   function increasePriceOnQnt(arg, element, i) {
     if (arg.dataset.itemprice != null) {let p = arg.dataset.itemprice; 
-        arg.querySelector('.price-item').innerHTML = p * i;                
-    }else{element.querySelector('.price-item').innerHTML = element.dataset.itemprice * i;} 
+        arg.querySelector('.price-item').innerHTML = p * i;               
+    }else{
+      element.querySelector('.price-item').innerHTML = element.dataset.itemprice * i;
+    } 
+    calculateBill("item-selected", "bill");  
 }
 
 function qntCartIncrease(even, className) {let evenParent = even.target.parentNode;
     let i = evenParent.childNodes[5].innerHTML;
     i++;
     evenParent.childNodes[5].innerHTML = i;
-    if (className != null) {
-        document.querySelectorAll(`.${className}`).forEach((elem) => {
-        if (evenParent.parentNode.parentNode.dataset.itemid === elem.dataset.itemid) { 
-            elem.querySelector('.num').innerHTML = i; 
-            increasePriceOnQnt(evenParent.parentNode.parentNode, elem, i)
-        }}) 
-    }
-    calculateBill("item-selected", "bill");
-}
+    if (className != null) {document.querySelectorAll(`.${className}`).forEach((elem) => {
+        if (evenParent.parentNode.parentNode.dataset.itemid === elem.dataset.itemid) { elem.querySelector('.num').innerHTML = i; 
+        increasePriceOnQnt(evenParent.parentNode.parentNode, elem, i)
+        }
+      })}
+    ;}
 
 function qntCartDecrease(even, className) {let evenParent = even.target.parentNode;
   let i = even.target.parentNode.childNodes[5].innerHTML;
@@ -227,6 +226,19 @@ function qntCartDecrease(even, className) {let evenParent = even.target.parentNo
       })
   }
   calculateBill("item-selected", "bill");
+}
+
+async function getCoupon() {
+  document.querySelector('.all-offers').classList.toggle('hide');
+  let data = await FETCHdata('get-coupon');
+  data.forEach((el)=>{
+    let html = `<div class="offerBox">
+    <p>${el.coupon_code}</p>
+    <p>${el.discount}% OFF on above &#8377;${el.coupon_amount}</p>
+    <span>APPLY</span>
+    </div>`
+  document.querySelector('.all-offers').innerHTML += html; 
+  })
 }
 
 

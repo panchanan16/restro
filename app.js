@@ -9,7 +9,6 @@ const addItem = require('./routes/addmenu')
 const body = require('body-parser');
 const jwt = require('jsonwebtoken')
 const path = require('path');
-// const ad = require('./routes/adminpage-route')
 const cookieParser = require('cookie-parser')
 
 // app.use(express.urlencoded({ extended: false }))
